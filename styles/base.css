@@ -1,0 +1,14 @@
+.slidev-layout {
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+}
+
+.two-cols-header {
+  grid-template-rows: repeat(3, 1fr) !important;
+}
+
+.slidev-layout.fact h1 {
+  text-align: center;
+}
