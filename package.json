@@ -5,7 +5,8 @@
   "scripts": {
     "build": "slidev build",
     "dev": "slidev --open",
-    "export": "slidev export"
+    "export": "slidev export",
+    "compress-images": "find ./assets -type f \\( -name \"*.jpg\" -o -name \"*.png\" \\) -exec sh -c 'imagemin \"$0\" > \"$0.tmp\" && mv \"$0.tmp\" \"$0\"' {} \\;"
   },
   "dependencies": {
     "@slidev/cli": "^51.4.0",
@@ -15,5 +16,10 @@
     "slidev-theme-horizon": "^0.1.1",
     "slidev-theme-nearform": "^2.0.0",
     "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "imagemin-cli": "^8.0.0",
+    "imagemin-jpegtran": "^8.0.0",
+    "imagemin-pngquant": "^10.0.0"
   }
 }
