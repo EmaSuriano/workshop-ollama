@@ -233,6 +233,183 @@ layout: quote
 -. Dicho por los devs ...
 
 ---
+
+```mermaid {scale:0.7}
+flowchart TD
+    %% Clients
+    WebApp([Web Application])
+    MobileApp([Mobile Application])
+    DesktopApp([Desktop Application])
+    CLI([Command Line Tool])
+    
+    %% Backend components
+    subgraph Backend["Backend Services"]
+        direction TB
+        Gateway[API Gateway]
+        
+        subgraph AppLayer["Application Layer"]
+            direction LR
+            Logic[Business Logic]
+            DB[(Database)]
+        end
+        
+        subgraph AILayer["AI Layer"]
+            direction LR
+            Framework["LLM Framework"]
+            OllamaService["Ollama"]
+        end
+    end
+    
+    %% Client connections
+    WebApp -->|HTTP/REST| Gateway
+    MobileApp -->|HTTP/REST| Gateway
+    DesktopApp -->|HTTP/REST| Gateway
+    CLI -->|HTTP/REST| Gateway
+    
+    %% Backend connections
+    Gateway <--> Logic
+    Logic <--> DB
+    Logic <-->|Requests models| Framework
+    Framework <-->|API calls| OllamaService
+    
+    %% Visual styling
+    classDef clients stroke:#1890ff
+    classDef gateway stroke:#52c41a
+    classDef appLayer stroke:#d48806
+    classDef aiLayer stroke:#fa541c
+    classDef database stroke:#722ed1
+    
+    class WebApp,MobileApp,DesktopApp,CLI clients
+    class Gateway gateway
+    class Logic appLayer
+    class Framework,OllamaService aiLayer
+    class DB database
+    
+    %% Add titles
+    subgraph Clients["Client Applications"]
+        WebApp
+        MobileApp
+        DesktopApp
+        CLI
+    end
+```
+
+---
+layout: two-cols-header
+---
+
+# Stack de una aplicación (real)
+
+::left::
+
+<v-click>
+
+## Frontend
+
+* Web Application: ReactJS
+* Mobile Application: Kotlin / Swift
+* Desktop Application: Electron
+* Command Line Tool: Commander
+
+</v-click>
+
+::right::
+
+<v-click>
+
+## Backend
+
+* API Gateway: FastAPI, Flask, etc.
+* Application Layer + Database
+* AI Layer: 🎁
+* Ollama: ya lo vimos 
+
+</v-click>
+
+---
+
+# Stack de una aplicación (workshop)
+
+## Frontend + Backend
+
+* Frontend: Chainlit / Streamlit ✨
+* Application Layer + Database
+* AI Layer: 🎁
+* Ollama: ya lo vimos 
+
+
+---
+
+# Streamlit
+
+Streamlit es un framework de Python para construir rápidamente aplicaciones web interactivas para ciencia de datos e inteligencia artificial.
+
+- **Simplicidad**: Crea aplicaciones web con Python puro (sin necesidad de HTML/CSS/JS)
+- **Prototipado rápido**: Convierte scripts de datos en aplicaciones web compartibles en minutos
+- **Elementos interactivos**: Widgets incorporados para entradas de usuario (deslizadores, botones, entradas de texto)
+- **Reactividad**: Actualizaciones automáticas cuando cambian las entradas
+- **Visualización de datos**: Integración perfecta con bibliotecas populares de gráficos
+- **Gestión de estado**: Estado de sesión para mantener el estado de la aplicación entre ejecuciones
+- **Opciones de despliegue**: Fácil implementación a través de Streamlit Cloud u otros servicios
+
+---
+layout: full
+---
+
+<video controls autoplay loop src="https://s3-us-west-2.amazonaws.com/assets.streamlit.io/videos/hero-video.mp4" />
+
+---
+
+# Chainlit
+
+Chainlit es un framework de Python diseñado específicamente para construir aplicaciones de IA conversacional.
+
+- **Enfocado en aplicaciones LLM**: Optimizado para construir chatbots e interfaces conversacionales
+- **Gestión de conversaciones**: Características incorporadas para manejar contextos e historiales de chat
+- **Componentes de UI**: Elementos prefabricados para interfaces de chat
+- **Transmisión de mensajes**: Soporte para transmitir respuestas desde modelos de lenguaje
+- **Multi-modal**: Maneja texto, imágenes y archivos adjuntos en conversaciones
+- **Integración con bibliotecas LLM**: Funciona bien con LangChain, LlamaIndex y otros frameworks de LLM
+- **Herramientas de depuración**: Herramientas para ayudar a rastrear y depurar la ejecución de aplicaciones LLM
+- **Despliegue en la nube**: Opciones de implementación similares a Streamlit
+
+---
+layout: full
+---
+
+<video controls autoplay loop src="https://mintlify.s3.us-west-1.amazonaws.com/chainlit-43/images/overview.mp4" />
+
+---
+
+# Tabla de Decisión
+
+
+| **Necesidad** | **Mejor Opción** |
+|---------------|------------------|
+| Aplicación de chat o conversacional | Chainlit |
+| Visualización de datos | Streamlit |
+| Tableros interactivos | Streamlit |
+| Interfaces para modelos ML | Streamlit |
+| Integración avanzada con LLMs | Chainlit |
+| Mayor comunidad y recursos | Streamlit |
+| Interfaces optimizadas para chat | Chainlit |
+
+
+---
+
+# Guía Rápida
+
+##  **Streamlit** para: aplicaciones de datos, visualizaciones y dashboards
+##  **Chainlit** para: chatbots e interfaces conversacionales
+
+---
+layout: section
+---
+
+# asdasd
+
+
+---
 layout: image-right
 image: ./assets/chainlit.png
 ---

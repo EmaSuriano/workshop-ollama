@@ -12,3 +12,7 @@
 .slidev-layout.fact h1 {
   text-align: center;
 }
+
+.slidev-layout.full {
+  padding: 0;
+}
