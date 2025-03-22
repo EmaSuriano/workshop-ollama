@@ -224,6 +224,8 @@ layout: image
 image: https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcm5tdnp0dGt1anU2Z2ZwcXBvejhreW42cDZsNm8wODNxOTdpYXJwYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WcpaItX5JHYkw/giphy.gif
 ---
 
+<!-- Demo MSTY -->
+
 ---
 layout: quote
 ---
@@ -383,6 +385,8 @@ layout: full
 
 # Tabla de Decisión
 
+<v-clicks>
+
 
 | **Necesidad** | **Mejor Opción** |
 |---------------|------------------|
@@ -395,6 +399,8 @@ layout: full
 | Interfaces optimizadas para chat | Chainlit |
 
 
+</v-clicks>
+
 ---
 
 # Guía Rápida
@@ -403,244 +409,317 @@ layout: full
 ##  **Chainlit** para: chatbots e interfaces conversacionales
 
 ---
-layout: section
+layout: image
+image: https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDBkYXV6aHNldmk0ajU0M2J2cDc4Y3pmOWtuZG85NDkzeTJpYWYyeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/da75JuW2HHuBNqOHHE/giphy.gif
 ---
 
-# asdasd
-
-
----
-layout: image-right
-image: ./assets/chainlit.png
----
-
-# Chainlit
-
-asdasd
-
-
----
-layout: full
----
-
-<video controls>
-  <source src="https://mintlify.s3.us-west-1.amazonaws.com/chainlit-43/images/overview.mp4" type="video/mp4">
-</video>
-
+<!-- Demo Chainlit -->
 
 ---
 
-# Interfaces de Usuario: Streamlit
+# Chainlit y Ollama
 
-![Streamlit Logo](https://streamlit.io/images/brand/streamlit-logo-primary-colormark-darktext.png)
+```python {*}{maxHeight:'45vh'}
+import chainlit as cl
+import requests
+import json
 
-- Framework Python para crear aplicaciones web interactivas
-- Perfecto para prototipos rápidos
-- Componentes interactivos integrados
-- Fácil visualización de datos
+
+@cl.on_chat_start
+def start_chat():
+    # Initialize the message history with a system prompt
+    cl.user_session.set(
+        "message_history",
+        [{"role": "system", "content": "You are a helpful assistant."}],
+    )
+
+
+@cl.on_message
+async def main(message: cl.Message):
+    # Get the current message history
+    message_history = cl.user_session.get("message_history")
+
+    # Add the user's new message to history
+    message_history.append({"role": "user", "content": message.content})
+
+    # Create a message object for streaming
+    msg = cl.Message(content="")
+
+    try:
+        # Set up the request to Ollama's API
+        response = requests.post(
+            "http://localhost:11434/api/chat",  # Using the chat endpoint instead of generate
+            json={
+                "model": "llama3.2",  # Change to your preferred model
+                "messages": message_history,  # Pass the entire message history
+                "stream": True,  # Enable streaming
+            },
+            stream=True,  # Important for requests to stream the response
+        )
+
+        # Prepare to collect the full response
+        full_response = ""
+
+        # Process the streaming response
+        for line in response.iter_lines():
+            if line:
+                # Parse the JSON line
+                json_line = json.loads(line)
+
+                # Check if this is a content token
+                if "message" in json_line and "content" in json_line["message"]:
+                    token = json_line["message"]["content"]
+                    full_response += token
+                    # Stream the token to the UI
+                    await msg.stream_token(token)
+
+                # Check if this is the end of the stream
+                if json_line.get("done", False):
+                    break
+
+        # Add the assistant's response to the message history
+        message_history.append({"role": "assistant", "content": full_response})
+
+        # Update the session with the new message history
+        cl.user_session.set("message_history", message_history)
+
+        # Update the message (this is required even with streaming)
+        await msg.update()
+
+    except Exception as e:
+        # Handle any errors
+        await cl.Message(content=f"Error: {str(e)}", author="System").send()
+
+
+```
+
+
+---
+layout: cover
+background: https://images.unsplash.com/photo-1636690513351-0af1763f6237?q=80&w=1920&fit=crop
+---
+
+# AI Frameworks
 
 ---
 
-# Ejemplo Básico con Streamlit
+# Porque usar un Framework
+
+- **Simplicidad**: Menos código repetitivo con estructura y patrones claros
+- **Memoria Integrada**: Gestión automática del historial de conversaciones y contexto
+- **Experiencia del Desarrollador**: Seguridad de tipos y soporte IDE para desarrollo más rápido
+- **Manejo de Errores**: Lógica robusta de reintentos y gestión elegante de fallos
+- **Flexibilidad**: Cambio sencillo entre modelos y abstracción de proveedores
+- **Funciones Avanzadas**: Acceso simplificado a llamadas de funciones, RAG y otras técnicas
+- **Soporte Comunitario**: Documentación, ejemplos y mantenimiento continuo
+
+---
+layout: two-cols
+---
+# Popular Frameworks
+
+<v-clicks>
+
+* LangChain
+* LangGraph
+* LlamaIndex
+* CrewAI
+* Microsoft AutoGen
+* Phidata
+* PydanticAI
+* OpenAI Agents
+
+</v-clicks>
+
+::right::
+
+<v-click>
+
+![Jackie Chan](https://i.imgflip.com/qiev6.jpg?a483912)
+
+Y la lista sigue y sigue ...
+
+</v-click>
+
+---
+layout: iframe
+url: https://aiagentsdirectory.com/category/ai-agents-frameworks
+---
+
+---
+layout: statement
+---
+
+## Pero... Cual es el **mejor**?
+
+<v-clicks>
+
+# El que mas te guste
+
+## En realidad ... El que mejor comunidad tenga
+
+## Lo importante es eligir uno y **empezar**
+
+</v-clicks>
+
+---
+
+# **OpenAI** Agents SDK
+
+
+El SDK de Agentes de **OpenAI** es un framework ligero pero potente para construir flujos de trabajo multi-agente con LLMs que ofrece un enfoque estructurado para crear, gestionar e implementar agentes de IA.
+
+<v-clicks>
+
+- **Agents**: LLMs configurados con instructions, tools, guardrails, y handoffs
+- **Guardrails**: Verificaciones de seguridad configurables para validación de input/output
+- **Handoffs**: Llamadas especializadas de tools para transferir el control entre agents
+- **Compatibilidad**: Funciona con cualquier proveedor de modelos que soporte la API de Chat Completions de OpenAI
+- **Implementación Sencilla**: Fácil de configurar y comenzar con código mínimo
+- **Patrones de Agents Flexibles**: Soporta flujos deterministas, bucles iterativos y más
+- **Depuración Integrada**: Sistema de tracing completo con integraciones externas
+
+</v-clicks>
+
+---
+
+# Agents
+
+Los Agents son el bloque de construcción fundamental en tus aplicaciones. Un agent es un modelo de lenguaje grande (LLM), configurado con instructions y tools.
+
+## Configuración básica
+
+Las propiedades más comunes de un agent que configurarás son:
+
+* `instructions`: también conocido como developer message o system prompt.
+* `model`: qué LLM usar, y `model_settings` opcionales para configurar parámetros de ajuste del modelo como temperature, top_p, etc.
+* `tools`: Tools que el agent puede usar para lograr sus tareas.
+
+---
+
+# Ejemplo: Hola Mundo
 
 ```python
-import streamlit as st
-from ollama import Client
+from agents import Agent, ModelSettings, function_tool
 
-st.title("Mi Asistente con LLM Local")
+@function_tool
+def get_weather(city: str) -> str:
+    return f"The weather in {city} is sunny"
 
-# Inicializar cliente de Ollama
-client = Client(host="http://localhost:11434")
-
-# Interfaz de usuario
-prompt = st.text_input("Tu pregunta:", 
-                     placeholder="¿Qué quieres saber?")
-
-if st.button("Generar respuesta"):
-    with st.spinner("Pensando..."):
-        response = client.chat(model="mistral", 
-                            messages=[{"role": "user", "content": prompt}])
-        st.write(response["message"]["content"])
+agent = Agent(
+    name="Haiku agent",
+    instructions="Always respond in haiku form",
+    model="o3-mini",
+    tools=[get_weather],
+)
 ```
 
 ---
 
-# Componentes Interactivos de Streamlit
-
-- **Entradas**: Text inputs, sliders, selectors
-- **Visualización**: Charts, tables, maps
-- **Media**: Images, audio, video
-- **Layouts**: Columns, tabs, expandable sections
-- **Estado**: Session state para persistencia
-- **Deployment**: Fácil de implementar en la nube
-
----
-
-# Demo: Interfaz Avanzada
-
-- Selección de modelos
-- Historial de chat persistente
-- Configuración de parámetros (temperatura, tokens)
-- Exportación de resultados
-- Visualización de latencia y tokens
-
----
-
-# Agentic AI con phidata
-
-![Phidata Logo](https://docs.phidata.com/img/phidata-logo.png)
-
-- Framework para construir agentes AI autónomos
-- Integración directa con Ollama
-- Workflows inteligentes
-- Personalizable y extensible
-
----
-
-# Creación de un Agente Básico
+# Integración con **Ollama**
 
 ```python
-from phi.assistant import Assistant
+from agents import Agent, OpenAIChatCompletionsModel, Runner, AsyncOpenAI
 
-# Crear un asistente con modelo local
-assistant = Assistant(
-    name="Asistente Python",
-    llm="ollama/codellama",
-    description="Experto en Python y resolución de problemas",
-    instructions="""
-    - Ayuda con código Python
-    - Explica conceptos de programación
-    - Sugiere buenas prácticas
-    """
+model = OpenAIChatCompletionsModel(
+    model="llama3.2",
+    openai_client=AsyncOpenAI(
+        base_url="http://localhost:11434/v1",
+        api_key="NOT_AN_API_KEY",
+    ),
 )
 
-# Interactuar con el asistente
-response = assistant.run("Escribe una función que calcule fibonacci")
-print(response)
+agent = Agent(
+    name="Assistant",
+    instructions="You are a helpful assistant",
+    model=model
+)
 ```
 
 ---
 
-# Funcionalidades de los Agentes
+# Integración con **Chainlit**
 
-- **Memoria**: Recordar conversaciones previas
-- **Herramientas**: Acceso a APIs, bases de datos, búsqueda
-- **Workflows**: Secuencias automáticas de tareas
-- **Retroalimentación**: Aprendizaje por refuerzo
-- **Multi-agente**: Colaboración entre agentes
+```python {*}{maxHeight:'45vh'}
+from agents import Agent, OpenAIChatCompletionsModel, AsyncOpenAI, Runner
+import chainlit as cl
+from openai.types.responses import ResponseTextDeltaEvent
 
----
+model = OpenAIChatCompletionsModel(
+    model="llama3.2",
+    openai_client=AsyncOpenAI(base_url="http://localhost:11434/v1", api_key="mock"),
+)
 
-# Desarrollo de APIs con FastAPI
+agent = Agent(
+    name="News Assistant",
+    instructions="You are a helpful assistant.",
+    model=model,
+)
 
-![FastAPI Logo](https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png)
 
-- Framework moderno para APIs en Python
-- Alto rendimiento con Async/Await
-- Documentación automática con Swagger
-- Validación de datos integrada
-- Fácil integración con Ollama
+@cl.on_chat_start
+def start_chat():
+    cl.user_session.set("message_history", [])
 
----
 
-# Ejemplo de API con FastAPI
+@cl.on_message
+async def main(message: cl.Message):
+    # Get the current message history
+    message_history = cl.user_session.get("message_history")
 
-```python
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from ollama import Client
+    # Add the user's new message to history
+    message_history.append({"role": "user", "content": message.content})
 
-app = FastAPI()
-client = Client()
+    # Create a message object for streaming
+    msg = cl.Message(content="")
 
-class Query(BaseModel):
-    prompt: str
-    model: str = "mistral"
-    temperature: float = 0.7
+    # Prepare to collect the full response
+    full_response = ""
 
-@app.post("/generate")
-async def generate_response(query: Query):
+    response = Runner.run_streamed(agent, input=message_history)
+
     try:
-        response = client.chat(
-            model=query.model,
-            messages=[{"role": "user", "content": query.prompt}],
-            temperature=query.temperature
-        )
-        return {"response": response["message"]["content"]}
+        async for event in response.stream_events():
+            if event.type == "raw_response_event" and isinstance(
+                event.data, ResponseTextDeltaEvent
+            ):
+                full_response += event.data.delta
+                await msg.stream_token(event.data.delta)
+
+        message_history.append({"role": "assistant", "content": full_response})
+
+        # Update the session with the new message history
+        cl.user_session.set("message_history", message_history)
+
+        # Update the message (this is required even with streaming)
+        await msg.update()
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # Handle any errors
+        await cl.Message(content=f"Error: {str(e)}", author="System").send()
+
 ```
-
----
-
-# Integración Frontend-Backend
-
-- **React/Vue/Angular**: Frontend moderno
-- **WebSockets**: Para streaming de respuestas
-- **Gestión de estado**: Control de sesiones y contexto
-- **Responsivo**: Adaptable a móviles y desktop
-- **Microservicios**: Arquitectura escalable
-
----
-
-# Mejores Prácticas
-
-- **Optimización de prompts**: Instrucciones claras y específicas
-- **Gestión de contexto**: Limitar tamaño para rendimiento
-- **Caching**: Almacenar respuestas comunes
-- **Monitoreo**: Tracking de uso y rendimiento
-- **Fallbacks**: Plan B cuando el modelo falla
-- **Feedback loop**: Mejora continua basada en uso real
-
----
-
-# Casos de Uso Prácticos
-
-- **Asistente de programación personal**
-- **Análisis de documentos locales**
-- **Generación de contenido sin conexión**
-- **Chatbots personalizados para equipos**
-- **Automatización de tareas repetitivas**
-- **Educación y entrenamiento interactivo**
-
----
-
-# Recursos Adicionales
-
-- [Documentación de Ollama](https://github.com/ollama/ollama)
-- [Streamlit Tutorial](https://docs.streamlit.io/)
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [Phidata Agents Guide](https://docs.phidata.com/)
-- [Hugging Face - Modelos Open Source](https://huggingface.co/)
-- [Comunidad Discord Workshop](https://discord.gg/workshop)
 
 ---
 
 # Actividad Práctica
 
-1. Instala Ollama y descarga un modelo
-2. Crea una interfaz simple con Streamlit
-3. Implementa una funcionalidad específica
-4. Presenta tu proyecto al grupo
+1. Instala [Ollama](https://ollama.com/) y [MSTY](https://msty.app/)
+1. Descarga un [modelo](https://ollama.com/models) que se adapte a tu sistema
+1. Chatea con tu modelo usando MSTY
+1. Clona el [repositorio de práctica](https://github.com/EmaSuriano/chainlit-ollama-demo/tree/main)
+1. Implementa una funcionalidad específica usando [OpenAI Agents SDK](https://openai.github.io/openai-agents-python)
+1. Presenta tu proyecto al grupo
 
 ¡Tienes 45 minutos!
 
 ---
+layout: cover
+background: https://images.unsplash.com/photo-1636690581110-a512fed05fd3?q=80&w=1920&auto=format&fit=crop
+---
 
 # ¡Gracias por Participar!
 
-## Contacto:
-- Email: workshop@example.com
-- Twitter: @workshop_ai
-- GitHub: github.com/workshop-ai
-
-## Próximos Eventos:
-- Embeddings y recuperación de información
-- Fine-tuning de modelos locales
-- Deployment en producción
+## Workshop por [EmaSuriano](https://emasuriano.com)
 
 ---
-layout: fact
----
-
-# Q&A
