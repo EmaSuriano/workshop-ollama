@@ -1,6 +1,6 @@
 # Workshop Ollama
 
-Workshop prepared to explain the current status of agentic AI building with Ollama.
+Hands-on exploration of running AI models locally using Ollama, an open-source tool that prioritizes privacy, offline capabilities, and cost savings compared to cloud alternatives. The workshop guides participants from basic installation and model selection through building applications with Streamlit and Chainlit frameworks, culminating in creating conversational interfaces using the OpenAI Agents SDK—making local AI development accessible to both beginners and experienced developers.
 
 * [Demo repository](https://github.com/EmaSuriano/chainlit-ollama-demo)
 * [Live Presentation](https://emasuriano.github.io/workshop-ollama)
