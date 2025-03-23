@@ -1,14 +1,14 @@
 ---
 theme: slidev-theme-nearform
 background: https://images.unsplash.com/photo-1636690581110-a512fed05fd3?q=80&w=1920&auto=format&fit=crop
-title: Introducción Práctica a LLMs con Ollama
-info: Workshop por EmaSuriano
+title: Practical Introduction to LLMs with Ollama
+info: Workshop by EmaSuriano
 transition: slide-left
 ---
 
-# Introducción Práctica a LLMs con Ollama
+# Practical Introduction to LLMs with Ollama
 
-## Workshop por [EmaSuriano](https://emasuriano.com)
+## Workshop by [EmaSuriano](https://emasuriano.com)
 
 <div class="abs-br m-6 text-xl">
   <a href="https://github.com/EmaSuriano/workshop-ollama" target="_blank" class="slidev-icon-btn">
@@ -18,38 +18,42 @@ transition: slide-left
 
 ---
 
-# ¿Qué haremos hoy?
+# What will we do today?
 
-- Entender qué son los LLMs locales y por qué son importantes
-- Instalar y configurar Ollama en tu computadora
-- Experimentar con diferentes modelos de lenguaje
-- Crear interfaces gráficas para interactuar con tus modelos
-- Desarrollar aplicaciones prácticas con IA local
-
----
-
-# ¿Por qué LLMs Locales?
-
-- **Privacidad**: Tus datos nunca salen de tu computadora
-- **Sin conexión**: Funcionan sin necesidad de internet
-- **Personalización**: Control total sobre los modelos y parámetros
-- **Economía**: Sin costos recurrentes por llamadas a APIs
-- **Latencia**: Respuestas más rápidas sin depender de servidores externos
+- Understand what local LLMs are and why they're important
+- Install and configure Ollama on your computer
+- Experiment with different language models
+- Create graphical interfaces to interact with your models
+- Develop practical applications with local AI
 
 ---
 
-# Comparativa: Local vs Cloud
+# Why Local LLMs?
 
 <v-clicks>
 
-| Característica | LLMs Locales | LLMs en la Nube |
-|----------------|--------------|-----------------|
-| Privacidad     | ✅ Total     | ❌ Limitada     |
-| Potencia       | ⚠️ Limitada por hardware | ✅ Alta |
-| Costo          | ✅ Gratis/Único | ❌ Suscripción |
-| Personalización| ✅ Completa   | ⚠️ Limitada    |
-| Facilidad      | ⚠️ Más técnico | ✅ Sencillo    |
-| Disponibilidad | ✅ 24/7 Offline | ❌ Requiere internet |
+- **Privacy**: Your data never leaves your computer
+- **Offline**: They work without internet
+- **Customization**: Total control over models and parameters
+- **Economy**: No recurring costs for API calls
+- **Latency**: Faster responses without depending on external servers
+
+</v-clicks>
+
+---
+
+# Comparison: Local vs Cloud
+
+<v-clicks>
+
+| Feature       | Local LLMs     | Cloud LLMs      |
+|---------------|----------------|-----------------|
+| Privacy       | ✅ Total       | ❌ Limited      |
+| Power         | ⚠️ Limited by hardware | ✅ High  |
+| Cost          | ✅ Free/One-time| ❌ Subscription |
+| Customization | ✅ Complete    | ⚠️ Limited     |
+| Ease of use   | ⚠️ More technical | ✅ Simple    |
+| Availability  | ✅ 24/7 Offline | ❌ Requires internet |
 
 </v-clicks>
 
@@ -57,57 +61,55 @@ transition: slide-left
 layout: two-cols-header
 ---
 
-# Requisitos Técnicos
+# Technical Requirements
 
 ::left::
 
-## Mínimos:
+## Minimum:
 
-- CPU moderno (4+ cores)
+- Modern CPU (4+ cores)
 - 8GB RAM
-- 10GB espacio libre
-- Sistema operativo compatible
+- 10GB free space
+- Compatible operating system
 
 ::right::
 
-## Recomendados:
+## Recommended:
 
-- GPU NVIDIA (CUDA)
+- NVIDIA GPU (CUDA)
 - 16GB+ RAM
-- 50GB+ espacio libre
+- 50GB+ free space
 
 ---
 layout: image-right
 image: ./assets/ollama.png
 ---
 
-# **Ollama**: Tu Plataforma de LLMs Locales
+# **Ollama**: Your Local LLMs Platform
 
-- Framework open source para ejecutar LLMs localmente
-- Soporte para múltiples modelos (Llama, Mistral, Phi, etc.)
-- API simple y potente
-- Interfaz de línea de comandos intuitiva
+- Open source framework to run LLMs locally
+- Support for multiple models (Llama, Mistral, Phi, etc.)
+- Simple and powerful API
+- Intuitive command line interface
 
 ---
 layout: image-right
 image: ./assets/ollama-install.png
 ---
 
-# Instalación de Ollama
+# Installing Ollama
 
-
-Ollama tiene soporte para todos los Sistemas Operativos: 
+Ollama supports all Operating Systems:
 
 * [Mac](https://ollama.com/download/mac)
 * [Linux](https://ollama.com/download/linux)
 * [Windows](https://ollama.com/download/windows)
 
-
 ---
 
-# Primeros Pasos con Ollama
+# First Steps with Ollama
 
-Ollama en si no tiene una interfaz, por lo que la forma de comunicarnos es usando la consola: 
+Ollama itself doesn't have an interface, so the way to communicate is using the console:
 
 ```bash
 > ollama
@@ -139,31 +141,31 @@ Use "ollama [command] --help" for more information about a command.
 
 ---
 
-# Workflow normal de trabajo con modelos 
+# Normal workflow with models
 
 <v-clicks every="2">
 
-## 1. Descargar un modelo
+## 1. Download a model
 
 ```bash
 > ollama pull llama3.2
 ```
 
-## 2. Iniciar una conversación
+## 2. Start a conversation
 ```bash
 > ollama run llama3.2
 >>> Hi
 How can I help you today?
 ```
 
-## 3. Consultar desde la terminal
+## 3. Query from the terminal
 
 ```bash
-> ollama run llama3.2 "Contame un chiste bueno"
-¡Claro! Aquí tienes uno:
-¿Por qué la computadora fue al doctor?
-¡Porque tenía un virus!
-Espero que te haya hecho sonreír. ¿Quieres escuchar otro?
+> ollama run llama3.2 "Tell me a good joke"
+Sure! Here's one:
+Why did the computer go to the doctor?
+Because it had a virus!
+Hope that made you smile. Would you like to hear another one?
 ```
 
 </v-clicks >
@@ -173,13 +175,13 @@ layout: image-right
 image: ./assets/ollama-models.png
 ---
 
-# Modelos Populares en Ollama
+# Popular Models in Ollama
 
-- **Mistral** - Balanceado en tamaño y rendimiento
-- **Llama** - Varias versiones y tamaños disponibles
-- **Phi** - Compacto pero potente
-- **Gemma** - El modelo abierto de Google
-- **Deepseek-r1** - Modelo chino con razonamiento
+- **Mistral** - Balanced in size and performance
+- **Llama** - Various versions and sizes available
+- **Phi** - Compact but powerful
+- **Gemma** - Google's open model
+- **Deepseek-r1** - Chinese model with reasoning
 
 ---
 layout: image
@@ -192,32 +194,32 @@ image: https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWRwbzU0b2MweDBqdWFjZmU
 layout: quote
 ---
 
-# "Todo muy lindo, pero esto no se parece a Chat GPT"
+# "That's nice and all, but this doesn't look like Chat GPT"
 
--. Dicho por todo el mundo ...
+-. Said by everyone ...
 
 ---
 layout: iframe-right
 url: https://msty.app/
 ---
 
-# MSTY 
+# MSTY
 
-Es la forma más sencilla de usar modelos de IA locales y en línea con integración perfecta de Ollama y sin necesidad de configuración técnica.
+It's the easiest way to use local and online AI models with seamless integration of Ollama and without the need for technical configuration.
 
 ## Features
 
-- Sin configuración técnica (sin Docker, sin terminal)
-- Compara múltiples respuestas de IA lado a lado
-- Importa archivos y conecta fuentes de conocimiento
-- Mejor UX para Ollama
+- No technical setup (no Docker, no terminal)
+- Compare multiple AI responses side by side
+- Import files and connect knowledge sources 
+- Better UX for Ollama
 
 ---
 layout: iframe
 url: https://docs.msty.app/getting-started/download
 ---
 
-# MSTY: Instalación
+# MSTY: Installation
 
 ---
 layout: image
@@ -230,9 +232,9 @@ image: https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcm5tdnp0dGt1anU2Z2ZwcXB
 layout: quote
 ---
 
-# "Todo muy lindo, pero como hago una aplicación?"
+# "That's nice and all, but how do I make an application?"
 
--. Dicho por los devs ...
+-. Said by devs ...
 
 ---
 
@@ -300,7 +302,7 @@ flowchart TD
 layout: two-cols-header
 ---
 
-# Stack de una aplicación (real)
+# Stack of a (real) application
 
 ::left::
 
@@ -324,35 +326,38 @@ layout: two-cols-header
 * API Gateway: FastAPI, Flask, etc.
 * Application Layer + Database
 * AI Layer: 🎁
-* Ollama: ya lo vimos 
+* Ollama: we've already seen it
 
 </v-click>
 
 ---
 
-# Stack de una aplicación (workshop)
+# Stack of a _workshop_ application
 
 ## Frontend + Backend
 
 * Frontend: Chainlit / Streamlit ✨
 * Application Layer + Database
 * AI Layer: 🎁
-* Ollama: ya lo vimos 
-
+* Ollama: we've already seen it
 
 ---
 
 # Streamlit
 
-Streamlit es un framework de Python para construir rápidamente aplicaciones web interactivas para ciencia de datos e inteligencia artificial.
+Streamlit is a Python framework for quickly building interactive web applications for data science and artificial intelligence.
 
-- **Simplicidad**: Crea aplicaciones web con Python puro (sin necesidad de HTML/CSS/JS)
-- **Prototipado rápido**: Convierte scripts de datos en aplicaciones web compartibles en minutos
-- **Elementos interactivos**: Widgets incorporados para entradas de usuario (deslizadores, botones, entradas de texto)
-- **Reactividad**: Actualizaciones automáticas cuando cambian las entradas
-- **Visualización de datos**: Integración perfecta con bibliotecas populares de gráficos
-- **Gestión de estado**: Estado de sesión para mantener el estado de la aplicación entre ejecuciones
-- **Opciones de despliegue**: Fácil implementación a través de Streamlit Cloud u otros servicios
+<v-clicks>
+
+- **Simplicity**: Create web applications with pure Python (no need for HTML/CSS/JS)
+- **Rapid prototyping**: Turn data scripts into shareable web applications in minutes
+- **Interactive elements**: Built-in widgets for user inputs (sliders, buttons, text inputs)
+- **Reactivity**: Automatic updates when inputs change
+- **Data visualization**: Seamless integration with popular graphing libraries
+- **State management**: Session state to maintain application state between runs
+- **Deployment options**: Easy implementation through Streamlit Cloud or other services
+
+</v-clicks>
 
 ---
 layout: full
@@ -364,16 +369,20 @@ layout: full
 
 # Chainlit
 
-Chainlit es un framework de Python diseñado específicamente para construir aplicaciones de IA conversacional.
+Chainlit is a Python framework specifically designed for building conversational AI applications.
 
-- **Enfocado en aplicaciones LLM**: Optimizado para construir chatbots e interfaces conversacionales
-- **Gestión de conversaciones**: Características incorporadas para manejar contextos e historiales de chat
-- **Componentes de UI**: Elementos prefabricados para interfaces de chat
-- **Transmisión de mensajes**: Soporte para transmitir respuestas desde modelos de lenguaje
-- **Multi-modal**: Maneja texto, imágenes y archivos adjuntos en conversaciones
-- **Integración con bibliotecas LLM**: Funciona bien con LangChain, LlamaIndex y otros frameworks de LLM
-- **Herramientas de depuración**: Herramientas para ayudar a rastrear y depurar la ejecución de aplicaciones LLM
-- **Despliegue en la nube**: Opciones de implementación similares a Streamlit
+<v-clicks>
+
+- **Focused on LLM applications**: Optimized for building chatbots and conversational interfaces
+- **Conversation management**: Built-in features for handling contexts and chat histories
+- **UI components**: Prefabricated elements for chat interfaces
+- **Message streaming**: Support for streaming responses from language models
+- **Multi-modal**: Handles text, images, and file attachments in conversations
+- **Integration with LLM libraries**: Works well with LangChain, LlamaIndex, and other LLM frameworks
+- **Debugging tools**: Tools to help track and debug LLM application execution
+- **Cloud deployment**: Deployment options similar to Streamlit
+
+</v-clicks>
 
 ---
 layout: full
@@ -383,30 +392,28 @@ layout: full
 
 ---
 
-# Tabla de Decisión
+# Decision Table
 
 <v-clicks>
 
-
-| **Necesidad** | **Mejor Opción** |
+| **Need** | **Best Option** |
 |---------------|------------------|
-| Aplicación de chat o conversacional | Chainlit |
-| Visualización de datos | Streamlit |
-| Tableros interactivos | Streamlit |
-| Interfaces para modelos ML | Streamlit |
-| Integración avanzada con LLMs | Chainlit |
-| Mayor comunidad y recursos | Streamlit |
-| Interfaces optimizadas para chat | Chainlit |
-
+| Chat or conversational application | Chainlit |
+| Data visualization | Streamlit |
+| Interactive dashboards | Streamlit |
+| Interfaces for ML models | Streamlit |
+| Advanced integration with LLMs | Chainlit |
+| Larger community and resources | Streamlit |
+| Chat-optimized interfaces | Chainlit |
 
 </v-clicks>
 
 ---
 
-# Guía Rápida
+# Quick Guide
 
-##  **Streamlit** para: aplicaciones de datos, visualizaciones y dashboards
-##  **Chainlit** para: chatbots e interfaces conversacionales
+## **Streamlit** for: data applications, visualizations, and dashboards
+## **Chainlit** for: chatbots and conversational interfaces
 
 ---
 layout: image
@@ -417,7 +424,7 @@ image: https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDBkYXV6aHNldmk0ajU0M2J
 
 ---
 
-# Chainlit y Ollama
+# Chainlit and Ollama
 
 ```python {*}{maxHeight:'45vh'}
 import chainlit as cl
@@ -489,10 +496,7 @@ async def main(message: cl.Message):
     except Exception as e:
         # Handle any errors
         await cl.Message(content=f"Error: {str(e)}", author="System").send()
-
-
 ```
-
 
 ---
 layout: cover
@@ -503,20 +507,27 @@ background: https://images.unsplash.com/photo-1636690513351-0af1763f6237?q=80&w=
 
 ---
 
-# Porque usar un Framework
+# Why use a Framework
 
-- **Simplicidad**: Menos código repetitivo con estructura y patrones claros
-- **Memoria Integrada**: Gestión automática del historial de conversaciones y contexto
-- **Experiencia del Desarrollador**: Seguridad de tipos y soporte IDE para desarrollo más rápido
-- **Manejo de Errores**: Lógica robusta de reintentos y gestión elegante de fallos
-- **Flexibilidad**: Cambio sencillo entre modelos y abstracción de proveedores
-- **Funciones Avanzadas**: Acceso simplificado a llamadas de funciones, RAG y otras técnicas
-- **Soporte Comunitario**: Documentación, ejemplos y mantenimiento continuo
+<v-clicks>
+
+- **Simplicity**: Less repetitive code with clear structure and patterns
+- **Integrated Memory**: Automatic management of conversation history and context
+- **Developer Experience**: Type safety and IDE support for faster development
+- **Error Handling**: Robust retry logic and elegant failure management
+- **Flexibility**: Easy switching between models and provider abstraction
+- **Advanced Features**: Simplified access to function calls, RAG, and other techniques
+- **Community Support**: Documentation, examples, and continuous maintenance
+
+</v-clicks>
 
 ---
-layout: two-cols
+layout: two-cols-header
 ---
+
 # Popular Frameworks
+
+::left::
 
 <v-clicks>
 
@@ -537,7 +548,7 @@ layout: two-cols
 
 ![Jackie Chan](https://i.imgflip.com/qiev6.jpg?a483912)
 
-Y la lista sigue y sigue ...
+And the list goes on and on...
 
 </v-click>
 
@@ -550,15 +561,15 @@ url: https://aiagentsdirectory.com/category/ai-agents-frameworks
 layout: statement
 ---
 
-## Pero... Cual es el **mejor**?
+## But... Which one is the **best**?
 
 <v-clicks>
 
-# El que mas te guste
+# The one you like the most
 
-## En realidad ... El que mejor comunidad tenga
+## Actually... The one with the best community
 
-## Lo importante es eligir uno y **empezar**
+## The important thing is to choose one and **start**
 
 </v-clicks>
 
@@ -566,18 +577,17 @@ layout: statement
 
 # **OpenAI** Agents SDK
 
-
-El SDK de Agentes de **OpenAI** es un framework ligero pero potente para construir flujos de trabajo multi-agente con LLMs que ofrece un enfoque estructurado para crear, gestionar e implementar agentes de IA.
+The **OpenAI** Agents SDK is a lightweight but powerful framework for building multi-agent workflows with LLMs that offers a structured approach to creating, managing, and implementing AI agents.
 
 <v-clicks>
 
-- **Agents**: LLMs configurados con instructions, tools, guardrails, y handoffs
-- **Guardrails**: Verificaciones de seguridad configurables para validación de input/output
-- **Handoffs**: Llamadas especializadas de tools para transferir el control entre agents
-- **Compatibilidad**: Funciona con cualquier proveedor de modelos que soporte la API de Chat Completions de OpenAI
-- **Implementación Sencilla**: Fácil de configurar y comenzar con código mínimo
-- **Patrones de Agents Flexibles**: Soporta flujos deterministas, bucles iterativos y más
-- **Depuración Integrada**: Sistema de tracing completo con integraciones externas
+- **Agents**: LLMs configured with instructions, tools, guardrails, and handoffs
+- **Guardrails**: Configurable safety checks for input/output validation
+- **Handoffs**: Specialized tool calls to transfer control between agents
+- **Compatibility**: Works with any model provider that supports OpenAI's Chat Completions API
+- **Simple Implementation**: Easy to set up and get started with minimal code
+- **Flexible Agent Patterns**: Supports deterministic flows, iterative loops, and more
+- **Integrated Debugging**: Complete tracing system with external integrations
 
 </v-clicks>
 
@@ -585,19 +595,19 @@ El SDK de Agentes de **OpenAI** es un framework ligero pero potente para constru
 
 # Agents
 
-Los Agents son el bloque de construcción fundamental en tus aplicaciones. Un agent es un modelo de lenguaje grande (LLM), configurado con instructions y tools.
+Agents are the fundamental building block in your applications. An agent is a large language model (LLM), configured with instructions and tools.
 
-## Configuración básica
+## Basic configuration
 
-Las propiedades más comunes de un agent que configurarás son:
+The most common agent properties you'll configure are:
 
-* `instructions`: también conocido como developer message o system prompt.
-* `model`: qué LLM usar, y `model_settings` opcionales para configurar parámetros de ajuste del modelo como temperature, top_p, etc.
-* `tools`: Tools que el agent puede usar para lograr sus tareas.
+* `instructions`: also known as developer message or system prompt.
+* `model`: which LLM to use, and optional `model_settings` to configure model tuning parameters like temperature, top_p, etc.
+* `tools`: Tools that the agent can use to accomplish its tasks.
 
 ---
 
-# Ejemplo: Hola Mundo
+# Example: Hello World
 
 ```python
 from agents import Agent, ModelSettings, function_tool
@@ -616,7 +626,7 @@ agent = Agent(
 
 ---
 
-# Integración con **Ollama**
+# Integration with **Ollama**
 
 ```python
 from agents import Agent, OpenAIChatCompletionsModel, Runner, AsyncOpenAI
@@ -638,7 +648,7 @@ agent = Agent(
 
 ---
 
-# Integración con **Chainlit**
+# Integration with **Chainlit**
 
 ```python {*}{maxHeight:'45vh'}
 from agents import Agent, OpenAIChatCompletionsModel, AsyncOpenAI, Runner
@@ -697,29 +707,30 @@ async def main(message: cl.Message):
     except Exception as e:
         # Handle any errors
         await cl.Message(content=f"Error: {str(e)}", author="System").send()
-
 ```
 
 ---
 
-# Actividad Práctica
+# Practical Activity
 
-1. Instala [Ollama](https://ollama.com/) y [MSTY](https://msty.app/)
-1. Descarga un [modelo](https://ollama.com/models) que se adapte a tu sistema
-1. Chatea con tu modelo usando MSTY
-1. Clona el [repositorio de práctica](https://github.com/EmaSuriano/chainlit-ollama-demo/tree/main)
-1. Implementa una funcionalidad específica usando [OpenAI Agents SDK](https://openai.github.io/openai-agents-python)
-1. Presenta tu proyecto al grupo
+<v-clicks>
 
-¡Tienes 45 minutos!
+1. Install [Ollama](https://ollama.com/) and [MSTY](https://msty.app/)
+1. Download a [model](https://ollama.com/models) that suits your system
+1. Chat with your model using MSTY
+1. Clone the [practice repository](https://github.com/EmaSuriano/chainlit-ollama-demo/tree/main)
+1. Implement a specific functionality using [OpenAI Agents SDK](https://openai.github.io/openai-agents-python)
+1. Present your project to the group
+
+</v-clicks>
 
 ---
 layout: cover
 background: https://images.unsplash.com/photo-1636690581110-a512fed05fd3?q=80&w=1920&auto=format&fit=crop
 ---
 
-# ¡Gracias por Participar!
+# Thank You for Participating!
 
-## Workshop por [EmaSuriano](https://emasuriano.com)
+## Workshop by [EmaSuriano](https://emasuriano.com)
 
 ---
